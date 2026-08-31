@@ -1,0 +1,1076 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Restaurant ERP Proposal — DotCode Solutions</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Work+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<style>
+  :root{
+    --ink: #1B1F1D;
+    --ink-soft: #2A2F2B;
+    --kraft: #E9DDC5;
+    --kraft-dark: #D6C4A0;
+    --kraft-line: #C3AF87;
+    --chalk: #F3EFE3;
+    --chalk-dim: #C9C4B4;
+    --brass: #A8763C;
+    --brass-dim: #8A6231;
+    --tomato: #8B2E1C;
+    --tomato-bright:#B23A24;
+    --sage: #55603F;
+    --paper: #FBF8F1;
+    --paper-shadow: rgba(27,31,29,0.18);
+    --radius-s: 3px;
+    --radius-m: 6px;
+    --font-display: 'Fraunces', serif;
+    --font-body: 'Work Sans', sans-serif;
+    --font-mono: 'IBM Plex Mono', monospace;
+    --maxw: 1180px;
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--kraft);
+    color:var(--ink);
+    font-family:var(--font-body);
+    line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+  }
+  img,svg{display:block;max-width:100%;}
+  button{font-family:inherit;}
+  a{color:inherit;}
+
+  ::selection{background:var(--brass);color:var(--chalk);}
+
+  :focus-visible{
+    outline:2px solid var(--tomato);
+    outline-offset:2px;
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    *{animation-duration:0.001ms !important;animation-iteration-count:1 !important;transition-duration:0.001ms !important;scroll-behavior:auto !important;}
+  }
+
+  /* ---------- HERO ---------- */
+  .hero{
+    background:
+      radial-gradient(ellipse at 20% -10%, rgba(255,255,255,0.05), transparent 55%),
+      var(--ink);
+    color:var(--chalk);
+    padding:64px 24px 56px;
+    position:relative;
+    overflow:hidden;
+  }
+  .hero::after{
+    content:"";
+    position:absolute;
+    left:0;right:0;bottom:0;
+    height:14px;
+    background:
+      linear-gradient(135deg, var(--kraft) 25%, transparent 25%) 0 0/16px 16px,
+      linear-gradient(-135deg, var(--kraft) 25%, transparent 25%) 0 0/16px 16px;
+    background-color:transparent;
+  }
+  .hero-inner{
+    max-width:var(--maxw);
+    margin:0 auto;
+  }
+  .hero-kicker{
+    font-family:var(--font-mono);
+    font-size:13px;
+    letter-spacing:0.02em;
+    color:var(--brass);
+    display:flex;
+    gap:10px;
+    align-items:center;
+    margin-bottom:22px;
+    opacity:0;
+    animation:chalk-in 0.7s ease-out 0.1s forwards;
+  }
+  .hero-kicker .dot{width:6px;height:6px;border-radius:50%;background:var(--brass);}
+  .hero h1{
+    font-family:var(--font-display);
+    font-weight:600;
+    font-optical-sizing:auto;
+    font-size:clamp(38px, 6vw, 68px);
+    line-height:1.03;
+    margin:0 0 18px;
+    max-width:16ch;
+    opacity:0;
+    animation:chalk-in 0.8s ease-out 0.25s forwards;
+  }
+  .hero p.lede{
+    font-size:17px;
+    color:var(--chalk-dim);
+    max-width:52ch;
+    margin:0 0 34px;
+    opacity:0;
+    animation:chalk-in 0.8s ease-out 0.4s forwards;
+  }
+  @keyframes chalk-in{
+    from{opacity:0; transform:translateY(6px);}
+    to{opacity:1; transform:translateY(0);}
+  }
+  .hero-meta{
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(160px,1fr));
+    gap:0;
+    border-top:1px solid rgba(243,239,227,0.18);
+    max-width:640px;
+    opacity:0;
+    animation:chalk-in 0.8s ease-out 0.55s forwards;
+  }
+  .hero-meta div{
+    padding:14px 18px 14px 0;
+    border-right:1px solid rgba(243,239,227,0.18);
+  }
+  .hero-meta div:last-child{border-right:none;}
+  .hero-meta span{
+    display:block;
+    font-family:var(--font-mono);
+    font-size:11px;
+    color:var(--chalk-dim);
+    margin-bottom:4px;
+  }
+  .hero-meta strong{
+    font-weight:500;
+    font-size:14.5px;
+  }
+
+  /* ---------- LAYOUT ---------- */
+  .layout{
+    max-width:var(--maxw);
+    margin:0 auto;
+    padding:48px 24px 100px;
+    display:grid;
+    grid-template-columns:1.62fr 1fr;
+    gap:44px;
+    align-items:start;
+  }
+  @media (max-width:900px){
+    .layout{grid-template-columns:1fr; padding-bottom:220px;}
+  }
+
+  .section-lead{
+    margin:0 0 26px;
+  }
+  .section-lead h2{
+    font-family:var(--font-display);
+    font-size:26px;
+    font-weight:600;
+    margin:0 0 8px;
+  }
+  .section-lead p{
+    color:var(--ink-soft);
+    font-size:15px;
+    max-width:56ch;
+    margin:0;
+  }
+
+  /* ---------- MODULE (menu) LIST ---------- */
+  .menu-list{
+    border-top:1px solid var(--kraft-line);
+  }
+  .module{
+    border-bottom:1px solid var(--kraft-line);
+    padding:22px 0;
+  }
+  .module-head{
+    display:flex;
+    align-items:flex-start;
+    gap:16px;
+    cursor:pointer;
+  }
+  .module-check{
+    flex:0 0 auto;
+    width:22px;height:22px;
+    margin-top:3px;
+    border:1.5px solid var(--brass-dim);
+    border-radius:var(--radius-s);
+    background:var(--paper);
+    position:relative;
+    appearance:none;
+    -webkit-appearance:none;
+    cursor:pointer;
+    transition:background 0.15s ease, border-color 0.15s ease;
+  }
+  .module-check:checked{
+    background:var(--sage);
+    border-color:var(--sage);
+  }
+  .module-check:checked::after{
+    content:"";
+    position:absolute;
+    left:6px; top:2px;
+    width:6px; height:11px;
+    border:solid var(--paper);
+    border-width:0 2px 2px 0;
+    transform:rotate(40deg);
+  }
+  .module-title-row{
+    flex:1;
+    display:flex;
+    justify-content:space-between;
+    gap:12px;
+    align-items:baseline;
+    flex-wrap:wrap;
+  }
+  .module-title-row h3{
+    font-family:var(--font-display);
+    font-size:20px;
+    font-weight:600;
+    margin:0;
+  }
+  .module-price{
+    font-family:var(--font-mono);
+    font-size:16px;
+    color:var(--brass-dim);
+    white-space:nowrap;
+  }
+  .module-body{
+    margin-left:38px;
+    margin-top:10px;
+    display:grid;
+    grid-template-columns:1fr;
+    max-width:64ch;
+  }
+  .module-bullets{
+    margin:0 0 12px;
+    padding:0;
+    list-style:none;
+    display:grid;
+    grid-template-columns:repeat(auto-fill,minmax(190px,1fr));
+    gap:5px 18px;
+  }
+  .module-bullets li{
+    font-size:13.5px;
+    color:var(--ink-soft);
+    padding-left:14px;
+    position:relative;
+  }
+  .module-bullets li::before{
+    content:"–";
+    position:absolute;
+    left:0;
+    color:var(--brass);
+  }
+  .module-note{
+    font-size:12.5px;
+    color:#6b6455;
+    font-style:italic;
+    margin:0 0 10px;
+  }
+  .addons{
+    border-left:2px solid var(--kraft-line);
+    padding-left:14px;
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+  }
+  .addon-row{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    font-size:13.5px;
+  }
+  .addon-row input[type=checkbox]{
+    width:16px;height:16px;
+    accent-color:var(--sage);
+    cursor:pointer;
+  }
+  .addon-row label{
+    flex:1;
+    cursor:pointer;
+  }
+  .addon-row .addon-price{
+    font-family:var(--font-mono);
+    color:var(--brass-dim);
+    font-size:13px;
+  }
+  fieldset:disabled .addon-row{opacity:0.4;}
+  fieldset{border:none;margin:0;padding:0;}
+
+  /* ---------- CUSTOM ITEMS ---------- */
+  .custom-block{
+    margin-top:34px;
+    padding-top:26px;
+    border-top:1px solid var(--kraft-line);
+  }
+  .custom-add-row{
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+    margin-top:14px;
+  }
+  .custom-add-row input[type=text],
+  .custom-add-row input[type=number]{
+    font-family:var(--font-body);
+    font-size:14px;
+    padding:10px 12px;
+    border:1px solid var(--kraft-line);
+    border-radius:var(--radius-s);
+    background:var(--paper);
+    color:var(--ink);
+  }
+  .custom-add-row input[type=text]{flex:1; min-width:180px;}
+  .custom-add-row input[type=number]{width:110px;}
+  .custom-add-row input:focus{border-color:var(--brass);}
+  .btn-add{
+    background:var(--ink);
+    color:var(--chalk);
+    border:none;
+    padding:10px 18px;
+    border-radius:var(--radius-s);
+    font-size:14px;
+    cursor:pointer;
+    transition:background 0.15s ease;
+  }
+  .btn-add:hover{background:var(--ink-soft);}
+  #customList{
+    list-style:none;
+    margin:16px 0 0;
+    padding:0;
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+  }
+  #customList li{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    font-size:14px;
+    background:var(--paper);
+    border:1px solid var(--kraft-line);
+    border-radius:var(--radius-s);
+    padding:9px 12px;
+  }
+  #customList li .cname{flex:1;}
+  #customList li .cprice{font-family:var(--font-mono); color:var(--brass-dim);}
+  #customList li button{
+    background:none;
+    border:none;
+    color:var(--tomato);
+    font-size:16px;
+    cursor:pointer;
+    line-height:1;
+    padding:2px 6px;
+  }
+
+  /* ---------- RECURRING REFERENCE ---------- */
+  .recurring{
+    margin-top:34px;
+    padding-top:26px;
+    border-top:1px solid var(--kraft-line);
+  }
+  .recurring-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:16px;
+  }
+  @media (max-width:560px){.recurring-grid{grid-template-columns:1fr;}}
+  .recurring-card{
+    background:var(--paper);
+    border:1px solid var(--kraft-line);
+    border-radius:var(--radius-m);
+    padding:16px;
+  }
+  .recurring-card h4{
+    font-family:var(--font-display);
+    font-size:15.5px;
+    margin:0 0 10px;
+  }
+  .radio-row{
+    display:flex;
+    align-items:flex-start;
+    gap:9px;
+    font-size:13.5px;
+    margin-bottom:9px;
+    cursor:pointer;
+  }
+  .radio-row input{margin-top:3px; accent-color:var(--sage); cursor:pointer;}
+  .radio-row .rprice{font-family:var(--font-mono); color:var(--brass-dim); display:block; font-size:12.5px;}
+  .recurring-disclaimer{
+    font-size:12px;
+    color:#6b6455;
+    margin-top:12px;
+    font-style:italic;
+  }
+
+  /* ---------- RECEIPT ---------- */
+  .receipt-wrap{
+    position:sticky;
+    top:24px;
+  }
+  .receipt{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:var(--font-mono);
+    padding:28px 22px 22px;
+    box-shadow:0 18px 32px -18px var(--paper-shadow);
+    position:relative;
+    clip-path: polygon(
+      0% 0%, 100% 0%, 100% 97%,
+      95% 100%, 90% 97%, 85% 100%, 80% 97%, 75% 100%, 70% 97%, 65% 100%,
+      60% 97%, 55% 100%, 50% 97%, 45% 100%, 40% 97%, 35% 100%, 30% 97%,
+      25% 100%, 20% 97%, 15% 100%, 10% 97%, 5% 100%, 0% 97%
+    );
+  }
+  .receipt-head{
+    text-align:center;
+    margin-bottom:16px;
+  }
+  .receipt-head .co{
+    font-size:14px;
+    font-weight:600;
+    letter-spacing:0.03em;
+  }
+  .receipt-head .sub{
+    font-size:10.5px;
+    color:#6b6455;
+    margin-top:2px;
+  }
+  .receipt-divider{
+    border:none;
+    border-top:1px dashed var(--kraft-line);
+    margin:14px 0;
+  }
+  #receiptItems{
+    display:flex;
+    flex-direction:column;
+    gap:6px;
+    min-height:32px;
+    font-size:12.5px;
+  }
+  .receipt-empty{
+    color:#8c846f;
+    font-style:italic;
+    font-size:12px;
+  }
+  .r-line{
+    display:flex;
+    justify-content:space-between;
+    gap:10px;
+    animation:print-in 0.32s ease-out;
+  }
+  .r-line.sub-line{padding-left:12px; color:#5a5344; font-size:11.5px;}
+  @keyframes print-in{
+    from{opacity:0; transform:translateY(-4px);}
+    to{opacity:1; transform:translateY(0);}
+  }
+  .receipt-total-row{
+    display:flex;
+    justify-content:space-between;
+    align-items:baseline;
+    font-size:16px;
+    font-weight:600;
+    margin-top:4px;
+  }
+  #receiptTotal{
+    transition:color 0.2s ease;
+  }
+  #receiptTotal.flash{color:var(--tomato);}
+  .receipt-count{
+    font-size:11px;
+    color:#8c846f;
+    margin-top:2px;
+    text-align:right;
+  }
+  .btn-submit{
+    width:100%;
+    margin-top:20px;
+    background:var(--tomato);
+    color:var(--chalk);
+    border:none;
+    padding:14px 16px;
+    font-family:var(--font-body);
+    font-weight:600;
+    font-size:14.5px;
+    border-radius:var(--radius-s);
+    cursor:pointer;
+    transition:background 0.15s ease, transform 0.1s ease;
+  }
+  .btn-submit:hover{background:var(--tomato-bright);}
+  .btn-submit:active{transform:scale(0.98);}
+  .btn-submit:disabled{background:#B7AE96; cursor:not-allowed;}
+  .submit-note{
+    font-size:11.5px;
+    color:#6b6455;
+    margin-top:10px;
+    text-align:center;
+    line-height:1.4;
+  }
+  .confirm-banner{
+    margin-top:12px;
+    background:var(--sage);
+    color:var(--chalk);
+    font-family:var(--font-body);
+    font-size:12.5px;
+    padding:10px 12px;
+    border-radius:var(--radius-s);
+    display:none;
+  }
+  .confirm-banner.show{display:block; animation:print-in 0.3s ease-out;}
+
+  @media (max-width:900px){
+    .receipt-wrap{
+      position:fixed;
+      left:0; right:0; bottom:0;
+      top:auto;
+      z-index:20;
+      max-width:none;
+      padding:0 14px 14px;
+      background:transparent;
+    }
+    .receipt{
+      max-height:70vh;
+      overflow-y:auto;
+      clip-path:none;
+      border-radius:var(--radius-m) var(--radius-m) 0 0;
+      box-shadow:0 -12px 28px -12px rgba(0,0,0,0.35);
+    }
+  }
+
+  footer{
+    text-align:center;
+    font-size:12px;
+    color:#6b6455;
+    padding:26px 24px 100px;
+  }
+  @media (min-width:901px){footer{padding-bottom:26px;}}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="hero-inner">
+    <div class="hero-kicker"><span class="dot"></span> DOTCODE SOLUTIONS · ODOO ERP PROPOSAL</div>
+    <h1>Restaurant ERP, built order by order.</h1>
+    <p class="lede">Choose the modules your restaurant actually needs — POS, kitchen, website, ordering, and payments — and watch the quote total itself as you go.</p>
+    <div class="hero-meta">
+      <div><span>Prepared for</span><strong>Shehraz Akhter</strong></div>
+      <div><span>Prepared by</span><strong>Arsalan Bashir</strong></div>
+      <div><span>Date</span><strong>31 August 2026</strong></div>
+      <div><span>Quotation valid</span><strong>7 days</strong></div>
+    </div>
+  </div>
+</header>
+
+<div class="layout">
+  <main>
+    <div class="section-lead">
+      <h2>Pick your modules</h2>
+      <p>Tick anything you'd like included. Prices are one-time implementation costs unless noted otherwise.</p>
+    </div>
+
+    <div class="menu-list" id="menuList"></div>
+
+    <div class="custom-block">
+      <div class="section-lead">
+        <h2>Add something not listed</h2>
+        <p>Need a feature outside the standard modules? Add it as a custom line and it'll join the quote below.</p>
+      </div>
+      <div class="custom-add-row">
+        <input type="text" id="customName" placeholder="Feature or module name" />
+        <input type="number" id="customPrice" placeholder="Cost ($)" min="0" step="1" />
+        <button class="btn-add" id="addCustomBtn" type="button">Add to quote</button>
+      </div>
+      <ul id="customList"></ul>
+    </div>
+
+    <div class="recurring">
+      <div class="section-lead">
+        <h2>Ongoing platform costs</h2>
+        <p>These run monthly or yearly rather than once, so they're kept separate from the implementation total below — pick whichever plan you're leaning toward for reference.</p>
+      </div>
+      <div class="recurring-grid">
+        <div class="recurring-card">
+          <h4>Odoo Enterprise license</h4>
+          <label class="radio-row">
+            <input type="radio" name="odooPlan" value="none" data-label="Not selected" data-price="0" checked />
+            <span>350$ Unlimited User Cracked Version Lifetime Note: This is a cracked version and not officially supported.</span>
+          </label>
+          <label class="radio-row">
+            <input type="radio" name="odooPlan" value="enterprise" data-label="Odoo Enterprise Standard — 1 user" data-price="298.80" />
+            <span>Odoo Enterprise Standard, 1 user
+              <span class="rprice">$24.90/mo · $298.80 billed annually</span>
+            </span>
+          </label>
+        </div>
+        <div class="recurring-card">
+          <h4>Hosting (Hostinger VPS)</h4>
+          <label class="radio-row">
+            <input type="radio" name="hostingPlan" value="none" data-label="Not selected" data-price="0" checked />
+            <span>Decide later</span>
+          </label>
+          <label class="radio-row">
+            <input type="radio" name="hostingPlan" value="annual" data-label="Hostinger VPS — annual" data-price="14.99" />
+            <span>Annual subscription <span class="rprice">$14.99/mo</span></span>
+          </label>
+          <label class="radio-row">
+            <input type="radio" name="hostingPlan" value="monthly" data-label="Hostinger VPS — monthly" data-price="25" />
+            <span>Monthly subscription <span class="rprice">$25/mo</span></span>
+          </label>
+        </div>
+      </div>
+      <p class="recurring-disclaimer">Reference only for now — your Odoo Enterprise plan will be finalized on a licensed subscription during implementation.</p>
+    </div>
+  </main>
+
+  <aside class="receipt-wrap">
+    <div class="receipt">
+      <div class="receipt-head">
+        <div class="co">DOTCODE SOLUTIONS</div>
+        <div class="sub">Restaurant ERP · Order Summary</div>
+      </div>
+      <hr class="receipt-divider" />
+      <div id="receiptItems"><p class="receipt-empty">No modules selected yet.</p></div>
+      <hr class="receipt-divider" />
+      <div class="receipt-total-row">
+        <span>TOTAL</span>
+        <span id="receiptTotal">$0.00</span>
+      </div>
+      <div class="receipt-count" id="receiptCount">0 items · one-time cost</div>
+      <button class="btn-submit" id="submitBtn" type="button" disabled>Submit</button>
+      <p class="submit-note">Saves your selection, downloads a PDF quote and a summary file.</p>
+      <div class="confirm-banner" id="confirmBanner"></div>
+    </div>
+  </aside>
+</div>
+
+<footer>DotCode Solutions — Odoo ERP implementation &amp; consulting, Lahore, Pakistan.</footer>
+
+<script>
+(function(){
+  "use strict";
+
+  var MODULES = [
+    {
+      id:'pos', name:'Point of Sale (POS)', price:150,
+      bullets:['Restaurant POS configuration','Tables and floor management','Dine-in and takeaway orders','Kitchen order routing','Product categories and menu setup','Discounts and promotions','Multiple payment methods','Receipt configuration','Daily sales reporting'],
+      addons:[]
+    },
+    {
+      id:'kitchen', name:'Kitchen Order Management', price:150,
+      bullets:['Kitchen order workflow','Kitchen preparation management','Order status and prep tracking','Kitchen printer/display configuration','Order notes and customer instructions','Dine-in / takeaway identification','Online order identification'],
+      note:'Kitchen printers or display hardware are quoted separately.',
+      addons:[]
+    },
+    {
+      id:'website', name:'Restaurant Website', price:350,
+      bullets:['Home, About, Menu, Ordering, Terms, Privacy pages','Mobile, tablet and desktop responsive design','Restaurant branding and menu presentation','Product images and food categories','Google Maps and social links','Contact forms, basic SEO, SSL, domain connection'],
+      note:'Custom Figma design below can be added on its own, with or without the website build.',
+      addons:[{id:'figma', name:'Custom Figma design', price:200, independent:true}]
+    },
+    {
+      id:'ordering', name:'Online Food Ordering System', price:100,
+      bullets:['Online menu with categories, images and variants','Add-ons and extras, cart and quantity management','Customer details, order notes and checkout','Order confirmation and online payment','Orders created directly inside Odoo'],
+      note:'Third-party marketplace integrations are billed separately, $50 per platform.',
+      addons:[
+        {id:'deliveroo', name:'Deliveroo integration', price:50},
+        {id:'ubereats', name:'Uber Eats integration', price:50},
+        {id:'justeat', name:'Just Eat integration', price:50}
+      ]
+    },
+    {
+      id:'payment', name:'Online Payment Integration', price:200,
+      bullets:['UK payment provider integration','Debit, credit, Apple Pay, Google Pay support','Final provider confirmed during implementation'],
+      note:'Payment gateway transaction fees are charged directly by the provider.',
+      addons:[]
+    }
+  ];
+
+  var state = {
+    modules:{},   // id -> bool
+    addons:{},    // "moduleId:addonId" -> bool
+    custom:[]     // {id,name,price}
+  };
+
+  var menuList = document.getElementById('menuList');
+
+  MODULES.forEach(function(mod){
+    state.modules[mod.id] = false;
+    mod.addons.forEach(function(a){ state.addons[mod.id+':'+a.id] = false; });
+
+    var wrap = document.createElement('div');
+    wrap.className = 'module';
+
+    var head = document.createElement('div');
+    head.className = 'module-head';
+    head.innerHTML =
+      '<input type="checkbox" class="module-check" id="chk-'+mod.id+'" />' +
+      '<div class="module-title-row">' +
+        '<h3><label for="chk-'+mod.id+'">'+mod.name+'</label></h3>' +
+        '<span class="module-price">$'+mod.price.toFixed(2)+'</span>' +
+      '</div>';
+    wrap.appendChild(head);
+
+    var body = document.createElement('div');
+    body.className = 'module-body';
+
+    var ul = document.createElement('ul');
+    ul.className = 'module-bullets';
+    mod.bullets.forEach(function(b){
+      var li = document.createElement('li');
+      li.textContent = b;
+      ul.appendChild(li);
+    });
+    body.appendChild(ul);
+
+    if(mod.note){
+      var note = document.createElement('p');
+      note.className = 'module-note';
+      note.textContent = mod.note;
+      body.appendChild(note);
+    }
+
+    var independentAddons = mod.addons.filter(function(a){ return a.independent; });
+    var dependentAddons = mod.addons.filter(function(a){ return !a.independent; });
+
+    function buildAddonRow(a){
+      var row = document.createElement('div');
+      row.className = 'addon-row';
+      var cid = 'addon-'+mod.id+'-'+a.id;
+      row.innerHTML =
+        '<input type="checkbox" id="'+cid+'" data-module="'+mod.id+'" data-addon="'+a.id+'" />' +
+        '<label for="'+cid+'">'+a.name+'</label>' +
+        '<span class="addon-price">+$'+a.price.toFixed(2)+'</span>';
+      return row;
+    }
+
+    if(independentAddons.length){
+      var independentDiv = document.createElement('div');
+      independentDiv.className = 'addons addons-independent';
+      independentAddons.forEach(function(a){
+        independentDiv.appendChild(buildAddonRow(a));
+      });
+      body.appendChild(independentDiv);
+    }
+
+    if(dependentAddons.length){
+      var fs = document.createElement('fieldset');
+      fs.id = 'fs-'+mod.id;
+      fs.disabled = true;
+      var addonsDiv = document.createElement('div');
+      addonsDiv.className = 'addons';
+      dependentAddons.forEach(function(a){
+        addonsDiv.appendChild(buildAddonRow(a));
+      });
+      fs.appendChild(addonsDiv);
+      body.appendChild(fs);
+    }
+
+    wrap.appendChild(body);
+    menuList.appendChild(wrap);
+
+    var checkbox = head.querySelector('.module-check');
+    checkbox.addEventListener('change', function(){
+      state.modules[mod.id] = checkbox.checked;
+
+      // The website build requires a Figma design, while Figma can still be
+      // selected independently without selecting the website.
+      if(mod.id === 'website' && checkbox.checked){
+        var figmaCheckbox = document.getElementById('addon-website-figma');
+        figmaCheckbox.checked = true;
+        state.addons['website:figma'] = true;
+      }
+
+      var fieldset = document.getElementById('fs-'+mod.id);
+      if(fieldset){
+        fieldset.disabled = !checkbox.checked;
+        if(!checkbox.checked){
+          fieldset.querySelectorAll('input[type=checkbox]').forEach(function(input){
+            input.checked = false;
+            state.addons[input.dataset.module+':'+input.dataset.addon] = false;
+          });
+        }
+      }
+      renderReceipt();
+    });
+  });
+
+  menuList.addEventListener('change', function(e){
+    var t = e.target;
+    if(t.matches('.addons input[type=checkbox]')){
+      state.addons[t.dataset.module+':'+t.dataset.addon] = t.checked;
+
+      // The website cannot remain selected after its Figma design is cleared.
+      if(t.dataset.module === 'website' && t.dataset.addon === 'figma' && !t.checked){
+        state.modules.website = false;
+        document.getElementById('chk-website').checked = false;
+      }
+
+      renderReceipt();
+    }
+  });
+
+  // Custom items
+  var customList = document.getElementById('customList');
+  var customName = document.getElementById('customName');
+  var customPrice = document.getElementById('customPrice');
+  var addCustomBtn = document.getElementById('addCustomBtn');
+  var customSeq = 0;
+
+  function addCustomItem(){
+    var name = customName.value.trim();
+    var price = parseFloat(customPrice.value);
+    if(!name || isNaN(price) || price < 0){
+      customName.focus();
+      return;
+    }
+    customSeq += 1;
+    var item = { id:'custom-'+customSeq, name:name, price:price };
+    state.custom.push(item);
+
+    var li = document.createElement('li');
+    li.innerHTML =
+      '<span class="cname">'+escapeHtml(name)+'</span>' +
+      '<span class="cprice">$'+price.toFixed(2)+'</span>' +
+      '<button type="button" aria-label="Remove '+escapeHtml(name)+'">&times;</button>';
+    li.querySelector('button').addEventListener('click', function(){
+      state.custom = state.custom.filter(function(c){ return c.id !== item.id; });
+      li.remove();
+      renderReceipt();
+    });
+    customList.appendChild(li);
+
+    customName.value = '';
+    customPrice.value = '';
+    customName.focus();
+    renderReceipt();
+  }
+
+  addCustomBtn.addEventListener('click', addCustomItem);
+  [customName, customPrice].forEach(function(el){
+    el.addEventListener('keydown', function(e){
+      if(e.key === 'Enter'){ e.preventDefault(); addCustomItem(); }
+    });
+  });
+
+  function escapeHtml(str){
+    var div = document.createElement('div');
+    div.textContent = str;
+    return div.innerHTML;
+  }
+
+  // Receipt rendering
+  var receiptItems = document.getElementById('receiptItems');
+  var receiptTotal = document.getElementById('receiptTotal');
+  var receiptCount = document.getElementById('receiptCount');
+  var submitBtn = document.getElementById('submitBtn');
+
+  function collectSelection(){
+    var lines = [];
+    var total = 0;
+
+    MODULES.forEach(function(mod){
+      var moduleOn = state.modules[mod.id];
+      if(moduleOn){
+        lines.push({label:mod.name, price:mod.price, sub:false});
+        total += mod.price;
+      }
+      mod.addons.forEach(function(a){
+        if(state.addons[mod.id+':'+a.id] && (a.independent || moduleOn)){
+          lines.push({label:'+ '+a.name, price:a.price, sub:true});
+          total += a.price;
+        }
+      });
+    });
+
+    state.custom.forEach(function(c){
+      lines.push({label:c.name, price:c.price, sub:false});
+      total += c.price;
+    });
+
+    return {lines:lines, total:total};
+  }
+
+  function getRecurringSelection(){
+    var odoo = document.querySelector('input[name=odooPlan]:checked');
+    var hosting = document.querySelector('input[name=hostingPlan]:checked');
+    return {
+      odoo:{label:odoo.dataset.label, price:parseFloat(odoo.dataset.price)},
+      hosting:{label:hosting.dataset.label, price:parseFloat(hosting.dataset.price)}
+    };
+  }
+
+  function renderReceipt(){
+    var sel = collectSelection();
+    receiptItems.innerHTML = '';
+
+    if(sel.lines.length === 0){
+      receiptItems.innerHTML = '<p class="receipt-empty">No modules selected yet.</p>';
+    } else {
+      sel.lines.forEach(function(line){
+        var row = document.createElement('div');
+        row.className = 'r-line' + (line.sub ? ' sub-line' : '');
+        row.innerHTML = '<span>'+escapeHtml(line.label)+'</span><span>$'+line.price.toFixed(2)+'</span>';
+        receiptItems.appendChild(row);
+      });
+    }
+
+    receiptTotal.textContent = '$'+sel.total.toFixed(2);
+    receiptTotal.classList.remove('flash');
+    void receiptTotal.offsetWidth;
+    receiptTotal.classList.add('flash');
+    setTimeout(function(){ receiptTotal.classList.remove('flash'); }, 350);
+
+    var count = sel.lines.filter(function(l){ return !l.sub; }).length;
+    receiptCount.textContent = count + (count === 1 ? ' item' : ' items') + ' · one-time cost';
+
+    submitBtn.disabled = sel.lines.length === 0;
+  }
+
+  document.querySelectorAll('input[name=odooPlan], input[name=hostingPlan]').forEach(function(r){
+    r.addEventListener('change', function(){});
+  });
+
+  renderReceipt();
+
+  // Submit: save the quote and open its confirmation page.
+  var confirmBanner = document.getElementById('confirmBanner');
+
+  submitBtn.addEventListener('click', function(){
+    var sel = collectSelection();
+    var recurring = getRecurringSelection();
+    var record = {
+      generatedAt: new Date().toISOString(),
+      client: 'Shehraz Akhter',
+      preparedBy: 'Arsalan Bashir',
+      company: 'DotCode Solutions',
+      quotationValidity: '7 days',
+      modules: sel.lines,
+      oneTimeTotal: sel.total,
+      recurring: recurring
+    };
+
+    try{
+      localStorage.setItem('dotcodeRestaurantProposalSelection', JSON.stringify(record));
+      window.location.href = 'proposal-confirmation.html';
+    }catch(err){
+      confirmBanner.textContent = 'Unable to save the quote. Please allow local storage and try again.';
+      confirmBanner.classList.add('show');
+    }
+  });
+
+  function downloadPdf(record){
+    if(!window.jspdf){ return; }
+    var doc = new window.jspdf.jsPDF({unit:'pt', format:'a4'});
+    var margin = 48;
+    var y = margin;
+    var pageWidth = doc.internal.pageSize.getWidth();
+
+    doc.setFont('helvetica','bold');
+    doc.setFontSize(18);
+    doc.text('Restaurant ERP Proposal — Order Summary', margin, y);
+    y += 26;
+
+    doc.setFont('helvetica','normal');
+    doc.setFontSize(10.5);
+    doc.text('Prepared for: '+record.client, margin, y); y += 14;
+    doc.text('Prepared by: '+record.preparedBy+' · '+record.company, margin, y); y += 14;
+    doc.text('Generated: '+new Date(record.generatedAt).toLocaleString(), margin, y); y += 14;
+    doc.text('Quotation validity: '+record.quotationValidity, margin, y); y += 22;
+
+    doc.setDrawColor(180,160,120);
+    doc.line(margin, y, pageWidth - margin, y);
+    y += 20;
+
+    doc.setFont('helvetica','bold');
+    doc.setFontSize(12.5);
+    doc.text('Selected modules', margin, y);
+    y += 18;
+
+    doc.setFont('helvetica','normal');
+    doc.setFontSize(10.5);
+    if(record.modules.length === 0){
+      doc.text('No modules were selected.', margin, y);
+      y += 16;
+    } else {
+      record.modules.forEach(function(line){
+        var x = line.sub ? margin + 16 : margin;
+        var label = (line.sub ? line.label : line.label);
+        doc.text(label, x, y);
+        doc.text('$'+line.price.toFixed(2), pageWidth - margin - 60, y);
+        y += 16;
+        if(y > 760){ doc.addPage(); y = margin; }
+      });
+    }
+
+    y += 6;
+    doc.line(margin, y, pageWidth - margin, y);
+    y += 20;
+
+    doc.setFont('helvetica','bold');
+    doc.setFontSize(13.5);
+    doc.text('One-time implementation total: $'+record.oneTimeTotal.toFixed(2), margin, y);
+    y += 30;
+
+    doc.setFont('helvetica','bold');
+    doc.setFontSize(12.5);
+    doc.text('Recurring platform costs (reference)', margin, y);
+    y += 18;
+    doc.setFont('helvetica','normal');
+    doc.setFontSize(10.5);
+    doc.text('Odoo license: '+record.recurring.odoo.label + (record.recurring.odoo.price ? ' — $'+record.recurring.odoo.price.toFixed(2) : ''), margin, y);
+    y += 15;
+    doc.text('Hosting: '+record.recurring.hosting.label + (record.recurring.hosting.price ? ' — $'+record.recurring.hosting.price.toFixed(2)+'/mo' : ''), margin, y);
+    y += 22;
+
+    doc.setFont('helvetica','italic');
+    doc.setFontSize(9);
+    doc.text('This is a client-generated summary and is subject to confirmation by DotCode Solutions.', margin, y);
+
+    doc.save('restaurant-erp-proposal-quote.pdf');
+  }
+
+  function downloadMarkdown(record){
+    var md = [];
+    md.push('# Restaurant ERP Proposal — Client Selection');
+    md.push('');
+    md.push('- **Prepared for:** '+record.client);
+    md.push('- **Prepared by:** '+record.preparedBy+' ('+record.company+')');
+    md.push('- **Generated:** '+new Date(record.generatedAt).toLocaleString());
+    md.push('- **Quotation validity:** '+record.quotationValidity);
+    md.push('');
+    md.push('## Selected modules');
+    md.push('');
+    if(record.modules.length === 0){
+      md.push('_No modules selected._');
+    } else {
+      md.push('| Item | Cost |');
+      md.push('|---|---|');
+      record.modules.forEach(function(line){
+        md.push('| '+line.label+' | $'+line.price.toFixed(2)+' |');
+      });
+    }
+    md.push('');
+    md.push('**One-time implementation total: $'+record.oneTimeTotal.toFixed(2)+'**');
+    md.push('');
+    md.push('## Recurring platform costs (reference only)');
+    md.push('');
+    md.push('- Odoo license: '+record.recurring.odoo.label + (record.recurring.odoo.price ? ' — $'+record.recurring.odoo.price.toFixed(2)+'/yr' : ''));
+    md.push('- Hosting: '+record.recurring.hosting.label + (record.recurring.hosting.price ? ' — $'+record.recurring.hosting.price.toFixed(2)+'/mo' : ''));
+    md.push('');
+    md.push('_Generated from the DotCode Solutions interactive proposal page._');
+
+    var blob = new Blob([md.join('\n')], {type:'text/markdown'});
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement('a');
+    a.href = url;
+    a.download = 'restaurant-erp-proposal-selection.md';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    setTimeout(function(){ URL.revokeObjectURL(url); }, 1000);
+  }
+
+})();
+</script>
+</body>
+</html>
