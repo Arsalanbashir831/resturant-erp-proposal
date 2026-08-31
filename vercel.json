@@ -5,10 +5,6 @@
     {
       "source": "/",
       "destination": "/index.html"
-    },
-    {
-      "source": "/confirmation",
-      "destination": "/proposal-confirmation.html"
     }
   ]
 }
