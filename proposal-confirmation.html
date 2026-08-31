@@ -42,7 +42,7 @@
   try{ record = JSON.parse(localStorage.getItem('dotcodeRestaurantProposalSelection')); }catch(err){}
 
   if(!record || !Array.isArray(record.modules)){
-    content.innerHTML = '<div class="missing"><h2>No proposal found</h2><p>Create a selection before opening the confirmation page.</p><a class="button primary" href="restaurant-erp-proposal.html">Build a proposal</a></div>';
+    content.innerHTML = '<div class="missing"><h2>No proposal found</h2><p>Create a selection before opening the confirmation page.</p><a class="button primary" href="/">Build a proposal</a></div>';
     return;
   }
 
@@ -60,7 +60,7 @@
     '<h2>Selected modules</h2><table><thead><tr><th>Item</th><th>Cost</th></tr></thead><tbody>'+rows+'</tbody></table>'+
     '<p class="total">One-time implementation total: '+money(record.oneTimeTotal)+'</p>'+
     '<h2>Recurring platform costs <small>(reference only)</small></h2><ul><li>Odoo license: '+recurringText(record.recurring.odoo, '/yr')+'</li><li>Hosting: '+recurringText(record.recurring.hosting, '/mo')+'</li></ul>'+
-    '<div class="actions"><button class="primary" id="pdfBtn">Download confirmation PDF</button><button class="secondary" id="shareBtn">Share confirmation</button><a class="button back" href="restaurant-erp-proposal.html">Back to proposal</a></div><p class="status" id="status" role="status"></p>';
+    '<div class="actions"><button class="primary" id="pdfBtn">Download confirmation PDF</button><button class="secondary" id="shareBtn">Share confirmation</button><a class="button back" href="/">Back to proposal</a></div><p class="status" id="status" role="status"></p>';
 
   function createPdf(){
     var doc = new window.jspdf.jsPDF({unit:'pt',format:'a4'}), margin=48, y=48, width=doc.internal.pageSize.getWidth();

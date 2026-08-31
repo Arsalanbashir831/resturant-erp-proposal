@@ -1,0 +1,14 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "cleanUrls": true,
+  "rewrites": [
+    {
+      "source": "/",
+      "destination": "/restaurant-erp-proposal.html"
+    },
+    {
+      "source": "/confirmation",
+      "destination": "/proposal-confirmation.html"
+    }
+  ]
+}

@@ -951,7 +951,7 @@
 
     try{
       localStorage.setItem('dotcodeRestaurantProposalSelection', JSON.stringify(record));
-      window.location.href = 'proposal-confirmation.html';
+      window.location.href = '/confirmation';
     }catch(err){
       confirmBanner.textContent = 'Unable to save the quote. Please allow local storage and try again.';
       confirmBanner.classList.add('show');
