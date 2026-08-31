@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Proposal Confirmation — DotCode Solutions</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<style>
+:root{--ink:#1b1f1d;--kraft:#e9ddc5;--paper:#fbf8f1;--red:#8b2e1c}*{box-sizing:border-box}body{margin:0;background:var(--kraft);color:var(--ink);font:16px/1.55 system-ui,sans-serif}header{background:var(--ink);color:var(--paper);padding:42px 24px 52px}header div,main{max-width:850px;margin:auto}h1{margin:0;font:600 clamp(34px,6vw,54px) Georgia,serif}header p{color:#c9c4b4}main{padding:0 24px 60px}.paper{background:var(--paper);margin-top:-24px;padding:clamp(24px,5vw,52px);box-shadow:0 12px 32px #1b1f1d2e;border-radius:6px}table{width:100%;border-collapse:collapse}th,td{padding:12px 8px;border-bottom:1px solid #d8ccb5;text-align:left}th:last-child,td:last-child{text-align:right}.total{text-align:right;font-size:20px;font-weight:700}.actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:28px}button,.button{border:0;border-radius:4px;padding:13px 18px;font-weight:700;cursor:pointer;text-decoration:none}.primary{background:var(--red);color:#fff}.secondary{background:var(--ink);color:#fff}.back{border:1px solid #92866f;color:var(--ink)}#status{min-height:24px;color:#55603f;font-weight:600}@media(max-width:560px){.actions>*{width:100%}}@media print{header{padding:20px}.paper{box-shadow:none;margin:0}.actions,#status{display:none}}
+</style>
+</head>
+<body>
+<header><div><h1>Proposal confirmation</h1><p>Review, download, and share your restaurant ERP selection.</p></div></header>
+<main><article class="paper" id="content"></article></main>
+<script>
+(function(){
+  var content=document.getElementById('content'),record;
+  try{record=JSON.parse(localStorage.getItem('dotcodeRestaurantProposalSelection'))}catch(e){}
+  function esc(v){var d=document.createElement('div');d.textContent=String(v);return d.innerHTML}
+  function money(v){return '$'+Number(v||0).toFixed(2)}
+  if(!record||!Array.isArray(record.modules)){
+    content.innerHTML='<h2>No proposal found</h2><p>Please create a selection first.</p><a class="button primary" href="/">Build a proposal</a>';return;
+  }
+  var rows=record.modules.map(function(x){return '<tr><td>'+esc(x.label)+'</td><td>'+money(x.price)+'</td></tr>'}).join('');
+  content.innerHTML='<h2>Restaurant ERP Proposal — Client Selection</h2><p><strong>Prepared for:</strong> '+esc(record.client)+'<br><strong>Prepared by:</strong> '+esc(record.preparedBy)+' ('+esc(record.company)+')<br><strong>Generated:</strong> '+esc(new Date(record.generatedAt).toLocaleString())+'<br><strong>Quotation validity:</strong> '+esc(record.quotationValidity)+'</p><h2>Selected modules</h2><table><thead><tr><th>Item</th><th>Cost</th></tr></thead><tbody>'+rows+'</tbody></table><p class="total">One-time total: '+money(record.oneTimeTotal)+'</p><h2>Recurring costs (reference only)</h2><ul><li>Odoo: '+esc(record.recurring.odoo.label)+'</li><li>Hosting: '+esc(record.recurring.hosting.label)+'</li></ul><div class="actions"><button id="pdf" class="primary">Download confirmation PDF</button><button id="share" class="secondary">Share confirmation</button><a href="/" class="button back">Back to proposal</a></div><p id="status"></p>';
+  function pdf(){
+    var d=new window.jspdf.jsPDF({unit:'pt',format:'a4'}),y=48,w=d.internal.pageSize.getWidth();
+    function line(t,b,s){d.setFont('helvetica',b?'bold':'normal');d.setFontSize(s||10.5);d.text(String(t),48,y);y+=s&&s>14?28:16}
+    line('Restaurant ERP Proposal — Confirmation',true,18);line('Prepared for: '+record.client);line('Prepared by: '+record.preparedBy+' · '+record.company);line('Generated: '+new Date(record.generatedAt).toLocaleString());y+=10;line('Selected modules',true,13);
+    record.modules.forEach(function(x){if(y>750){d.addPage();y=48}d.text(x.label,48+(x.sub?16:0),y);d.text(money(x.price),w-105,y);y+=16});
+    y+=10;line('One-time implementation total: '+money(record.oneTimeTotal),true,13);return d;
+  }
+  document.getElementById('pdf').onclick=function(){pdf().save('restaurant-erp-proposal-confirmation.pdf')};
+  document.getElementById('share').onclick=async function(){var status=document.getElementById('status');try{var file=new File([pdf().output('blob')],'restaurant-erp-proposal-confirmation.pdf',{type:'application/pdf'});if(navigator.share&&(!navigator.canShare||navigator.canShare({files:[file]}))){await navigator.share({title:'Restaurant ERP Proposal',files:[file]})}else{pdf().save(file.name);status.textContent='Sharing is unavailable, so the PDF was downloaded.'}}catch(e){if(e.name!=='AbortError')status.textContent='Unable to share. Please download the PDF.'}};
+})();
+</script>
+</body>
+</html>
