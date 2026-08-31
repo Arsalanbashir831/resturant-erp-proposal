@@ -4,7 +4,7 @@
   "rewrites": [
     {
       "source": "/",
-      "destination": "/restaurant-erp-proposal.html"
+      "destination": "/index.html"
     },
     {
       "source": "/confirmation",
